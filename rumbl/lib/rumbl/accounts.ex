@@ -32,9 +32,25 @@ defmodule Rumbl.Accounts do
     User.changeset(user, %{})
   end
 
+  @spec create_user(map() | none()) :: any
   def create_user(attrs \\ %{}) do
     %User{}
     |> User.changeset(attrs)
+    |> Repo.insert()
+  end
+
+
+  ### For end users registration
+
+  @spec change_registration(%User{}, map()) :: any
+  def change_registration(%User{} = user, params) do
+    User.registration_changeset(user, params)
+  end
+
+  @spec register_user(map() | none()) :: Ecto.Changeset.t()
+  def register_user(attrs \\ %{}) do
+    %User{}
+    |> User.registration_changeset(attrs)
     |> Repo.insert()
   end
 
