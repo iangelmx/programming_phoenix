@@ -26,7 +26,9 @@ defmodule RumblWeb.SessionController do
 
   @spec delete(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def delete(conn, _params) do
-    json(conn, %{ok: true})
+    conn
+    |> Auth.logout()
+    |> redirect(to: Routes.page_path(conn, :index))
   end
 
 end

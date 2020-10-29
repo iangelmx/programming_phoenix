@@ -19,4 +19,9 @@ defmodule RumblWeb.Auth do
     |> configure_session(renew: true)
   end
 
+  @spec logout(Plug.Conn.t()) :: Plug.Conn.t()
+  def logout(conn) do
+    configure_session(conn, drop: true)
+  end
+
 end
