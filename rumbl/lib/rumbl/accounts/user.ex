@@ -11,6 +11,9 @@ defmodule Rumbl.Accounts.User do
     field :password, :string, virtual: true
     field :password_hash, :string
 
+    has_many :aquarium_viewers, Rumbl.Habitats.Aquariums_viewer
+    has_many :aquariums, through: [:aquarium_viewers, :aquarium]
+
     timestamps()
   end
 
