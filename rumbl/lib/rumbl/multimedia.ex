@@ -5,9 +5,28 @@ defmodule Rumbl.Multimedia do
 
   import Ecto.Query, warn: false
   alias Rumbl.Repo
+  alias Rumbl.Accounts.User
 
   alias Rumbl.Multimedia.Video
 
+  @spec list_user_videos(%User{}) :: list(%Video{})
+  def list_user_videos(%User{} = user) do
+    Video
+    |> user_videos_query(user)
+    |> Repo.all
+  end
+
+  @spec get_user_video!(%User{}, any) :: %Video{}
+  def get_user_video!(%User{} = user, id) do
+    Video
+    |> user_videos_query(user)
+    |> Repo.get!(id)
+  end
+
+  #@spec user_videos_query(any(), Rumbl.Accounts.User.t()) :: Ecto.Query.t()
+  defp user_videos_query( query, %User{id: user_id} ) do
+    from( video in query, where: video.user_id == ^user_id )
+  end
   @doc """
   Returns the list of videos.
 
