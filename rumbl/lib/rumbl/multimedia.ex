@@ -7,7 +7,18 @@ defmodule Rumbl.Multimedia do
   alias Rumbl.Repo
   alias Rumbl.Accounts.User
 
-  alias Rumbl.Multimedia.Video
+  alias Rumbl.Multimedia.{Video, Category}
+
+  def list_alphabetical_categories() do
+    Category
+    |> Category.alphabetical()
+    |> Repo.all()
+  end
+
+  @spec create_category!(String.t()) :: %Category{}
+  def create_category!(name) do
+    Repo.insert!(%Category{name: name}, on_conflict: :nothing)
+  end
 
   @spec list_user_videos(%User{}) :: list(%Video{})
   def list_user_videos(%User{} = user) do
