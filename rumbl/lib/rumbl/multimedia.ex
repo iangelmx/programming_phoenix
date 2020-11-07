@@ -25,6 +25,7 @@ defmodule Rumbl.Multimedia do
     Video
     |> user_videos_query(user)
     |> Repo.all
+    |> Repo.preload(:category)
   end
 
   @spec get_user_video!(%User{}, any) :: %Video{}
@@ -32,6 +33,7 @@ defmodule Rumbl.Multimedia do
     Video
     |> user_videos_query(user)
     |> Repo.get!(id)
+    |> Repo.preload(:category)
   end
 
   #@spec user_videos_query(any(), Rumbl.Accounts.User.t()) :: Ecto.Query.t()

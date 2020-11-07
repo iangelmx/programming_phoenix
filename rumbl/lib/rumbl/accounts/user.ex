@@ -20,6 +20,7 @@ defmodule Rumbl.Accounts.User do
     |> cast(attrs, [:name, :username])
     |> validate_required([:name, :username])
     |> validate_length(:username, min: 1, max: 20)
+    |> unique_constraint(:username, message: "That username has been already taken...")
   end
 
   @spec registration_changeset(%User{}, map()) :: Ecto.Changeset.t()
